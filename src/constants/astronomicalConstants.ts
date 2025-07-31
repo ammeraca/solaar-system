@@ -51,7 +51,7 @@ export const planetData = {
     // Real radius in kilometers
     mercury: 2439.7,
     venus: 6051.8,
-    earth: 6371, // FIXME: Delete a 0
+    earth: 6371,
     mars: 3389.5,
     jupiter: 69911,
     saturn: 58232,
@@ -75,7 +75,7 @@ export const planetData = {
     // Distance from sun in kilometers (semi-major axis)
     mercury: 57909175,
     venus: 108208930,
-    earth: 149597870.7, // FIXME: Multiply by 100
+    earth: 149597870.7,
     mars: 227943824,
     jupiter: 778570000,
     saturn: 1433530000,

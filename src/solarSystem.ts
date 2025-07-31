@@ -90,11 +90,9 @@ export class SolarSystem {
   public animate(time: number): void {
     this.planets.forEach((planet) => {
       const orbitalPeriod = planetData.orbitalPeriod[planet.name];
-      const speed =
-        ((2 * Math.PI) / (orbitalPeriod * 24 * 60 * 60 * 1000)) *
-        ORBITAL_SPEED_SCALE;
-
-      planet.orbit(time, 0.0001);
+      const speed = ((2 * Math.PI) / (orbitalPeriod * 24 * 60 * 60)) * 100;
+      console.log(speed);
+      planet.orbit(time, speed);
       planet.rotate(0.01); // Rotation speed
     });
   }

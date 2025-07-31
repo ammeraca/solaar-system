@@ -24,7 +24,7 @@ const camera = new THREE.PerspectiveCamera(
 const cameraController = new CameraController(
   camera,
   new THREE.Vector3(0, 0, 0),
-  200 // Initial distance - increased for better view
+  200 // Initial distance, increased for better view
 );
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });

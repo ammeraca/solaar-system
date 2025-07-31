@@ -37,7 +37,7 @@ export class SolarSystem {
         color: astronomicalData.color.sun,
       }),
       name: 'sun',
-      light: new THREE.PointLight(0xffffff, 10000, 0),
+      light: new THREE.PointLight(0xffffff, 1000000, 0),
     });
 
     this.scene.add(this.sun.mesh);
@@ -91,9 +91,8 @@ export class SolarSystem {
     this.planets.forEach((planet) => {
       const orbitalPeriod = planetData.orbitalPeriod[planet.name];
       const speed = ((2 * Math.PI) / (orbitalPeriod * 24 * 60 * 60)) * 100;
-      console.log(speed);
       planet.orbit(time, speed);
-      planet.rotate(0.01); // Rotation speed
+      planet.rotate(0.01); // FIXME: Adjust rotation speed
     });
   }
 

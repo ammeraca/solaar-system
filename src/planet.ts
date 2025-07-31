@@ -5,19 +5,22 @@ import { drawOrbit } from './utils/drawCircle';
 type planetProps = {
   material: THREE.MeshLambertMaterial;
   geometry: THREE.SphereGeometry;
+  name: string;
   orbitRadius: number;
 };
 
 export class Planet {
+  name: string;
   mesh: THREE.Mesh;
   orbitRadius: number;
 
-  constructor({ geometry, material, orbitRadius }: planetProps) {
+  constructor({ geometry, material, name, orbitRadius }: planetProps) {
     this.mesh = new THREE.Mesh(geometry, material);
     this.mesh.position.x = orbitRadius;
     this.orbitRadius = orbitRadius;
     this.mesh.castShadow = true;
     this.mesh.receiveShadow = true;
+    this.name = name;
   }
 
   getPosition(): THREE.Vector3 {

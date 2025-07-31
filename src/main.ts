@@ -10,66 +10,48 @@ import {
   starData,
 } from './constants/astronomicalConstants';
 import { SCALE_FACTOR } from './constants/globalConstants';
+import { SolarSystem } from './solarSystem';
+import { CameraController } from './cameraController';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
   0.1,
-  1000
+  10000
 );
-const renderer = new THREE.WebGLRenderer();
+
+const cameraController = new CameraController(
+  camera,
+  new THREE.Vector3(0, 0, 0),
+  200 // Initial distance - increased for better view
+);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Optional: for softer shadows
 document.body.appendChild(renderer.domElement);
 
-const log = (x: number) => Math.log(x) / Math.log(10);
-
-camera.position.set(0, 0, starData.radius.sun * SCALE_FACTOR * 2);
-
-const sun = new Star({
-  geometry: new THREE.SphereGeometry(
-    starData.radius.sun * SCALE_FACTOR,
-    64,
-    64
-  ),
-  material: new THREE.MeshBasicMaterial({ color: astronomicalData.color.sun }),
-  light: new THREE.PointLight(0xffffff, 10000, 0),
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-const earth = new Planet({
-  geometry: new THREE.SphereGeometry(
-    planetData.radius.earth * SCALE_FACTOR,
-    32,
-    32
-  ),
-  material: new THREE.MeshLambertMaterial({
-    color: astronomicalData.color.earth,
-  }),
-  orbitRadius: planetData.orbitalRadius.earth * SCALE_FACTOR,
-});
+// scene.background = new THREE.Color(0x000011); // FIXME: Might remove this
 
-// const moon = new Satellite({
-//   geometry: new THREE.SphereGeometry(satelliteData.radius.moon, 32, 32),
-//   material: new THREE.MeshLambertMaterial({
-//     color: astronomicalData.color.satellites.moon,
-//   }),
-//   orbitRadius: satelliteData.orbitalRadius.moon,
-// });
+const solarSystem = new SolarSystem(scene);
 
-scene.add(drawOrbit(earth.orbitRadius, 1));
+// const log = (x: number) => Math.log(x) / Math.log(10);
 
-// earth.addSatellite(moon);
-sun.addPlanet(earth);
-
-scene.add(sun.mesh);
+camera.position.set(0, 0, starData.radius.sun * SCALE_FACTOR * 5);
 
 renderer.setAnimationLoop(() => {
-  camera.lookAt(earth.getPosition());
-  earth.orbit(Date.now(), 0.0001);
-  // moon.orbit(Date.now(), 0.01);
-  earth.rotate(0.01);
-  // moon.rotate(0.01);
+  // camera.lookAt(earth.getPosition());
+  const time = Date.now();
+  solarSystem.animate(time);
+  cameraController.update();
+
   renderer.render(scene, camera);
 });

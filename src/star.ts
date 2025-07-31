@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { Planet } from './planet';
+import { drawOrbit } from './utils/drawCircle';
 
 type starProps = {
   material: THREE.MeshBasicMaterial;
@@ -23,6 +24,7 @@ export class Star {
   }
 
   addPlanet(planet: Planet): void {
+    // drawOrbit(planet.orbitRadius, 1);
     this.mesh.add(planet.mesh);
     // this.light.position.copy(this.mesh.position);
   }

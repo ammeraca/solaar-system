@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { Satellite } from './satellite';
+import { drawOrbit } from './utils/drawCircle';
 
 type planetProps = {
   material: THREE.MeshLambertMaterial;
@@ -28,6 +29,7 @@ export class Planet {
   }
 
   addSatellite(satellite: Satellite) {
+    drawOrbit(satellite.orbitRadius, 1);
     this.mesh.add(satellite.mesh);
   }
 

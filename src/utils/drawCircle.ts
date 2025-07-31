@@ -1,9 +1,8 @@
 import * as THREE from 'three';
 
-export function drawOrbit(radius, lineWidth) {
+export function drawOrbit(radius: number, lineWidth: number) {
   const points: THREE.Vector3[] = [];
 
-  // 360 full circle will be drawn clockwise
   for (let i = 0; i <= 360; i++) {
     points.push(
       new THREE.Vector3(
@@ -16,8 +15,6 @@ export function drawOrbit(radius, lineWidth) {
 
   const geometry = new THREE.BufferGeometry();
   geometry.setFromPoints(points);
-  // geometry.setPositions(points);
-  // geometry.position.set(points);
 
   const material = new THREE.LineBasicMaterial({
     color: '#aaaaaa',
@@ -25,5 +22,4 @@ export function drawOrbit(radius, lineWidth) {
   });
 
   return new THREE.LineLoop(geometry, material);
-  // line.computeLineDistances();
 }
